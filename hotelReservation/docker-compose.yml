@@ -12,7 +12,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   frontend:
     configs:
@@ -34,7 +34,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   profile:
     configs:
@@ -56,7 +56,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   search:
     configs:
@@ -76,7 +76,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   geo:
     configs:
@@ -97,7 +97,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   rate:
     configs:
@@ -119,7 +119,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   review:
     environment:
@@ -173,7 +173,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   user:
     configs:
@@ -185,6 +185,8 @@ services:
       - JAEGER_SAMPLE_RATIO
       - LOG_LEVEL
     build: .
+    ports:
+      - "8086:8086"
     image: deathstarbench/hotel-reservation:latest
     entrypoint: user
     depends_on:
@@ -194,7 +196,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   reservation:
     configs:
@@ -216,7 +218,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -233,7 +235,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   memcached-rate:
     image: memcached:latest
@@ -248,7 +250,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   memcached-review:
     image: memcached
@@ -275,7 +277,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   memcached-reserve:
     image: memcached:latest
@@ -290,7 +292,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-geo:
     image: mongo:5.0
@@ -301,7 +303,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-profile:
     image: mongo:5.0
@@ -312,7 +314,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-rate:
     image: mongo:5.0
@@ -323,7 +325,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-review:
     image: mongo:5.0
@@ -334,7 +336,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-attractions:
     image: mongo:5.0
@@ -345,7 +347,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-recommendation:
     image: mongo:5.0
@@ -356,7 +358,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-reservation:
     image: mongo:5.0
@@ -367,7 +369,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
   mongodb-user:
     image: mongo:5.0
@@ -378,7 +380,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: always
 
 volumes:
   geo:

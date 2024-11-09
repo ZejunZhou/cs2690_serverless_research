@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/sha256"
 	"fmt"
 	"strconv"
 
@@ -28,11 +27,11 @@ func initializeDatabase(url string) (*mongo.Client, func()) {
 		for j := 0; j < 10; j++ {
 			password += suffix
 		}
-		sum := sha256.Sum256([]byte(password))
+		// sum := sha256.Sum256([]byte(password))
 
 		newUsers = append(newUsers, User{
 			fmt.Sprintf("Cornell_%x", suffix),
-			fmt.Sprintf("%x", sum),
+			fmt.Sprintf("%x", password),
 		})
 	}
 

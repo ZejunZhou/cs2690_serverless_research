@@ -1,7 +1,6 @@
 package user
 
 import (
-	"crypto/sha256"
 	"fmt"
 	"net"
 	"time"
@@ -87,47 +86,47 @@ func (s *Server) Shutdown() {
 	s.Registry.Deregister(s.uuid)
 }
 
-// CheckUser returns whether the username and password are correct.
 func (s *Server) CheckUser(ctx context.Context, req *pb.Request) (*pb.Result, error) {
 	res := new(pb.Result)
 
-	log.Trace().Msg("CheckUser")
-
-	sum := sha256.Sum256([]byte(req.Password))
-	pass := fmt.Sprintf("%x", sum)
-
+	log.Info().Msg("CheckUser")
+	log.Info().Msgf("Request user name %s", req.Username)
 	res.Correct = false
-	if true_pass, found := s.users[req.Username]; found {
-		res.Correct = pass == true_pass
+	if truePass, found := s.users[req.Username]; found {
+		log.Info().Msgf("Database password: %s, Input password: %s", truePass, req.Password)
+		res.Correct = req.Password == truePass
 	}
 
-	log.Trace().Msgf("CheckUser %d", res.Correct)
+	log.Info().Msgf("CheckUser result: %v", res.Correct)
 
 	return res, nil
 }
 
 // loadUsers loads hotel users from mongodb.
 func loadUsers(client *mongo.Client) map[string]string {
-	collection := client.Database("user-db").Collection("user")
-	curr, err := collection.Find(context.TODO(), bson.D{})
-	if err != nil {
-		log.Error().Msgf("Failed get users data: ", err)
-	}
+    collection := client.Database("user-db").Collection("user")
+    curr, err := collection.Find(context.TODO(), bson.D{})
+    if err != nil {
+        log.Error().Msgf("Failed to get users data: %v", err)
+        return nil
+    }
 
-	var users []User
-	curr.All(context.TODO(), &users)
-	if err != nil {
-		log.Error().Msgf("Failed get users data: ", err)
-	}
+    var users []User
+    if err := curr.All(context.TODO(), &users); err != nil {
+        log.Error().Msgf("Failed to decode users data: %v", err)
+        return nil
+    }
 
-	res := make(map[string]string)
-	for _, user := range users {
-		res[user.Username] = user.Password
-	}
+    res := make(map[string]string)
+    for _, user := range users {
+        res[user.Username] = user.Password
+        log.Info().Msgf("Loaded user - Username: %s, Password: %s", user.Username, user.Password)
+    }
 
-	log.Trace().Msg("Done load users")
+    log.Info().Msgf("All loaded users: %v", res) // 输出所有加载的用户数据
+    log.Info().Msg("Completed loading users")
 
-	return res
+    return res
 }
 
 type User struct {
