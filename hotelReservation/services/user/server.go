@@ -89,15 +89,15 @@ func (s *Server) Shutdown() {
 func (s *Server) CheckUser(ctx context.Context, req *pb.Request) (*pb.Result, error) {
 	res := new(pb.Result)
 
-	log.Info().Msg("CheckUser")
-	log.Info().Msgf("Request user name %s", req.Username)
+	// log.Info().Msg("CheckUser")
+	// log.Info().Msgf("Request user name %s", req.Username)
 	res.Correct = false
 	if truePass, found := s.users[req.Username]; found {
-		log.Info().Msgf("Database password: %s, Input password: %s", truePass, req.Password)
+		// log.Info().Msgf("Database password: %s, Input password: %s", truePass, req.Password)
 		res.Correct = req.Password == truePass
 	}
 
-	log.Info().Msgf("CheckUser result: %v", res.Correct)
+	// log.Info().Msgf("CheckUser result: %v", res.Correct)
 
 	return res, nil
 }

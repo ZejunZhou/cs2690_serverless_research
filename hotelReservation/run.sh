@@ -2,7 +2,7 @@
 
 # Step 1: Run docker-compose
 echo "Starting docker-compose up --build..."
-docker-compose up --build
+docker-compose up --build -d
 
 # Step 2: Check if Go is installed
 echo "Checking if Go is installed..."
