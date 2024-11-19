@@ -2,13 +2,25 @@ syntax = "proto3";
 
 package reservation;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/delimitrou/DeathStarBench/tree/master/hotelReservation/services/reservation";
 
 service Reservation {
   // MakeReservation makes a reservation based on given information
-  rpc MakeReservation(Request) returns (Result);
+  rpc MakeReservation(Request) returns (Result) {
+    option (google.api.http) = {
+      post: "/v1/reservations"
+      body: "*"
+    };
+  }
+
   // CheckAvailability checks if given information is available
-  rpc CheckAvailability(Request) returns (Result);
+  rpc CheckAvailability(Request) returns (Result) {
+    option (google.api.http) = {
+      get: "/v1/hotels"
+    };
+  }
 }
 
 message Request {

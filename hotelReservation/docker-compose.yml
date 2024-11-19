@@ -164,6 +164,8 @@ services:
       - JAEGER_SAMPLE_RATIO
       - LOG_LEVEL
     build: .
+    ports:
+      - "8085:8085"
     image: deathstarbench/hotel-reservation:latest
     entrypoint: recommendation
     depends_on:
@@ -208,6 +210,8 @@ services:
       - JAEGER_SAMPLE_RATIO
       - LOG_LEVEL
     build: .
+    ports:
+      - "8087:8087"
     image: deathstarbench/hotel-reservation:latest
     entrypoint: reservation
     depends_on:

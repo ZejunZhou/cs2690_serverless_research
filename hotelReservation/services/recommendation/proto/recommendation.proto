@@ -2,11 +2,17 @@ syntax = "proto3";
 
 package recommendation;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/delimitrou/DeathStarBench/tree/master/hotelReservation/services/recommendation";
 
 service Recommendation {
   // GetRecommendations returns recommended hotels for a given requirement
-  rpc GetRecommendations(Request) returns (Result);
+  rpc GetRecommendations(Request) returns (Result) {
+    option (google.api.http) = {
+      get: "/v1/recommendations"
+    };
+  }
 }
 
 // The requirement of the recommendation.
