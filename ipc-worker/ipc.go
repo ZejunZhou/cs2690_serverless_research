@@ -7,7 +7,12 @@ import (
 )
 
 func FifoCreate(name string) error {
-	return syscall.Mkfifo(fmt.Sprintf("%s/fifo/%s", rootPathForIpc, name), fileCreatMode)
+	fifoPath := fmt.Sprintf("%s/fifo/%s", rootPathForIpc, name)
+	err := os.MkdirAll(fmt.Sprintf("%s/fifo", rootPathForIpc), 0755)
+	if err != nil {
+		return fmt.Errorf("failed to create fifo directory: %v", err)
+	}
+	return syscall.Mkfifo(fifoPath, fileCreatMode)
 }
 
 func FifoRemove(name string) {

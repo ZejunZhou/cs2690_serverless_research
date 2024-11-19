@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var rootPathForIpc string
+var rootPathForIpc = "/tmp" // Default root path for IronFunctions' writable filesystem
 
 const fileCreatMode = 0664
 

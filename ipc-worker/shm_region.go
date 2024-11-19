@@ -13,6 +13,11 @@ type ShmRegion struct {
 }
 
 func ShmCreate(name string, size int) (*ShmRegion, error) {
+	err := os.MkdirAll(fmt.Sprintf("%s/shm", rootPathForIpc), 0755)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create shm directory: %v", err)
+	}
+
 	flags := syscall.O_CREAT | syscall.O_EXCL | syscall.O_RDWR
 	fd, err := syscall.Open(shmFullPath(name), flags, fileCreatMode)
 	if err != nil {
