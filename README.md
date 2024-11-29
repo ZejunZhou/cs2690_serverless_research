@@ -1,29 +1,67 @@
-# DeathStarBench
+## Get start
 
-Open-source benchmark suite for cloud microservices. DeathStarBench includes five end-to-end services, four for cloud systems, and one for cloud-edge systems running on drone swarms. 
+Steps to Set Up and Run the Benchmark
+1. Clone the Repositories
+Clone the benchmark repository:
+```
+git clone https://github.com/ZejunZhou/Serverless_Comparison_Benchmark.git
+```
+Clone the serverless functions repository:
+```
+git clone https://github.com/ZejunZhou/Ironfunctions-ServerlessResearch.git
+```
+2. Run the Benchmark
+Navigate to the benchmark repository's hotelReservation/ directory:
 
-## End-to-end Services <img src="microservices_bundle4.png" alt="suite-icon" width="40"/>
+```
+cd Serverless_Comparison_Benchmark/hotelReservation/
+```
+Run the benchmark setup script:
 
-* Social Network (released)
-* Media Service (released)
-* Hotel Reservation (released)
-* E-commerce site (in progress)
-* Banking System (in progress)
-* Drone coordination system (in progress)
+```
+./run.sh
+```
 
-## License & Copyright 
+3. Set Up and Run Serverless Functions
+Return to the root directory where you cloned the repositories:
 
-DeathStarBench is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 2.
+```
+cd ../../Ironfunctions-ServerlessResearch/
+```
 
-DeathStarBench is being developed by the [SAIL group](http://sail.ece.cornell.edu/) at Cornell University. 
+### Build the Docker image:
 
-## Publications
+```
+docker build -f Dockerfile.2690 -t 2690 .
+```
 
-More details on the applications and a characterization of their behavior can be found at ["An Open-Source Benchmark Suite for Microservices and Their Hardware-Software Implications for Cloud and Edge Systems"](http://www.csl.cornell.edu/~delimitrou/papers/2019.asplos.microservices.pdf), Y. Gan et al., ASPLOS 2019. 
+### Run the Docker container to start serverless functions:
 
-If you use this benchmark suite in your work, we ask that you please cite the paper above. 
+```
+docker run -it --name functions -v ${PWD}/data:/app/data -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 2690
+```
 
+### Register the serverless functions by running the script:
 
-## Beta-testing
+```
+./run.sh
+```
 
-If you are interested in joining the beta-testing group for DeathStarBench, send us an email at: <microservices-bench-L@list.cornell.edu>
+4. Run the Benchmark Tests
+Return to the root directory where you cloned the repositories:
+
+```
+cd ../Serverless_Comparison_Benchmark/
+```
+
+Run the benchmark directly (without serverless functions):
+
+```
+wrk -t2 -c2 -d30s -s mixed-workload_type_1.lua http://localhost:9977
+```
+
+Run the benchmark with serverless functions:
+
+```
+wrk -t2 -c2 -d30s -s mixed-workload_type_2.lua http://localhost:8080
+```
