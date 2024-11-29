@@ -88,8 +88,8 @@ local function reserve()
 
   local num_room = "1"
 
-  local method = "POST"
-  local path = "http://localhost:9977/v1/reservations?inDate=" .. in_date_str .. 
+  local method = "GET"
+  local path = "http://localhost:9977/v1/hotels?inDate=" .. in_date_str .. 
     "&outDate=" .. out_date_str .. "&lat=" .. tostring(lat) .. "&lon=" .. tostring(lon) ..
     "&hotelId=" .. hotel_id .. "&customerName=" .. cust_name .. "&username=" .. user_id ..
     "&password=" .. password .. "&number=" .. num_room
