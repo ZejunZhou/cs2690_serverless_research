@@ -1,6 +1,6 @@
-name: reservation
+name: post_reservation
 version: 0.0.1
 runtime: go
 entrypoint: ./func
-path: ""
-max_concurrency: 10
+path: /post_reservation
+max_concurrency: 1
