@@ -7,7 +7,7 @@ import (
 )
 
 func GetResponse() error {
-	url := "http://10.128.0.2:9977/v1/user/check"
+	url := "http://10.128.0.2:9977/v1/reservations"
 	resp, err := http.Get(url)
 	if err != nil {
 		return fmt.Errorf("failed to send request: %v", err)
