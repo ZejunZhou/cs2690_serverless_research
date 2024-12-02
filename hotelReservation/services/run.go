@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	r.Run()
+	// r.Run()
+	r.RunShared()
 }
