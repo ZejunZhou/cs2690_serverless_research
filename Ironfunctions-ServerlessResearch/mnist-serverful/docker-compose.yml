@@ -1,0 +1,9 @@
+version: '3'
+services:
+  mnist-api:
+    build: .
+    container_name: mnist_api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app

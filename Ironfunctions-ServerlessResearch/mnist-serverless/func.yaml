@@ -1,0 +1,5 @@
+name: train
+version: 0.0.1
+runtime: docker
+entrypoint: python func.py
+max_concurrency: 1
